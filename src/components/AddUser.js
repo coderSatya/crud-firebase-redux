@@ -13,7 +13,7 @@ const AddUser = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/");
+    navigate("/dashboard");
     dispatch(
       createUser({
         // id,

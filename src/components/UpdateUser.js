@@ -29,33 +29,8 @@ const UpdateUser = () => {
       .then((response) => setValues(response.data()));
     // .then((response) => console.log(response.data, "3333333"));
   }, [params.id]);
-  //   useEffect(() => {
-  //     if (params.id) {
-  //       firebase
-  //         .firestore()
-  //         .collection("UserDatabase")
-  //         .doc(params.id)
-  //         .get()
-  //         .then((response) => {
-  //           if (response.exists) {
-  //             const data = response.data();
-  //             setValues({
-  //               userName: data.userName,
-  //               userEmail: data.userEmail,
-  //               userContact: data.userContact,
-  //             });
-  //           } else {
-  //             console.log("Document not found");
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error fetching document:", error);
-  //         });
-  //     }
-  //   }, [params.id]);
 
   const handleChange = (e) => {
-    console.log(e, "888888888888888888888888888");
     setValues({
       ...values,
       [e.currentTarget.name]: e.currentTarget.value,
@@ -78,9 +53,9 @@ const UpdateUser = () => {
         userContact: values.userContact,
       })
     );
-    navigate("/");
+    navigate("/dashboard");
   };
-  console.log(values, "222222");
+
   return (
     <>
       <form className="w-full max-w-lg mx-auto my-5" onSubmit={handleSubmit}>

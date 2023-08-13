@@ -8,6 +8,8 @@ import { deleteUser } from "../features/User/UserSlice";
 import { useDispatch } from "react-redux";
 import { doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "../../src/firebase";
 
 const AllUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -37,21 +39,26 @@ const AllUsers = () => {
     dispatch(deleteUser({ id: id }));
     // await deleteDoc(doc(db, "userDatabase", id));
 
-    navigate("/");
+    navigate("/dashboard");
   };
-  //   const handleDelete = async (userId) => {
-  //     try {
-  //       alert("Are you sure you want to delete this id ?");
-  //       await userDB.doc(userId).delete();
-  //       dispatch(deleteUser({ userId: userId }));
-  //       navigate("/");
-  //     } catch (error) {
-  //       console.error("Error deleting document:", error);
-  //     }
-  //   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (error) {
+      console.log("Sign-out error:", error);
+    }
+  };
   return (
     <>
+      <button
+        className="bg-red-500 text-white font-semibold rounded-sm py-2 px-4 m float-right m-7"
+        type="submit"
+        onClick={handleSignOut}
+      >
+        Sign Out
+      </button>
       <Link to="/adduser">
         <button className="bg-red-500 text-white font-semibold rounded-sm my-5 py-2 px-4">
           ADD USER
@@ -84,7 +91,10 @@ const AllUsers = () => {
                         </Link>
                       </button>
                       <button>
-                        <Link to={`/`} onClick={() => handleDelete(user.id)}>
+                        <Link
+                          to={`/dashboard`}
+                          onClick={() => handleDelete(user.id)}
+                        >
                           <FaTrash size={32} color="white" />
                         </Link>
                       </button>
